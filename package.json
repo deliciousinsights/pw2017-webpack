@@ -6,6 +6,10 @@
   "author":
     "Christophe Porteneuve <christophe@delicious-insights.com> (http://delicious-insights.com/)",
   "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack --watch"
+  },
   "devDependencies": {
     "webpack": "^3.5.6"
   }
