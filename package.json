@@ -1,0 +1,12 @@
+{
+  "name": "webpack-pw17-workshop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Atelier Webpack pour Paris Web 2017",
+  "author":
+    "Christophe Porteneuve <christophe@delicious-insights.com> (http://delicious-insights.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^3.5.6"
+  }
+}
