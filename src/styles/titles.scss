@@ -1,0 +1,13 @@
+h1 {
+  color: navy;
+  font-size: 2em;
+  margin: 0 0 0.5em;
+
+  &:before {
+    content: '🦄 ';
+  }
+
+  &:after {
+    content: ' 🦄';
+  }
+}
