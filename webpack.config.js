@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 
 const PATHS = {
   app: path.join(__dirname, 'src'),
@@ -6,9 +7,18 @@ const PATHS = {
 }
 
 module.exports = {
+  devServer: {
+    contentBase: PATHS.target,
+    hot: true,
+    overlay: true,
+  },
   entry: PATHS.app,
   output: {
     path: PATHS.target,
     filename: 'bundle.js',
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+  ],
 }
