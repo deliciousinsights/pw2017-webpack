@@ -1,0 +1,308 @@
+@font-face {
+  font-family: 'Track';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Track"), url("../fonts/Track.otf");
+}
+
+@font-face {
+  font-family: 'Track';
+  font-style: italic;
+  font-weight: 400;
+  src: local("Track Italic"), url("../fonts/Track Italic.otf");
+}
+
+.reveal {
+  font-family: "Source Sans", sans-serif;
+  letter-spacing: 0;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  font-family: Merriweather;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1em;
+}
+
+.reveal tt, .reveal code, .reveal pre {
+  font-family: "Operator Mono Ssm", "Source Code Pro", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.65em;
+  line-height: 1.3em;
+}
+
+.reveal p code, .reveal li code, .reveal footer code, .reveal td code,
+.reveal p tt, .reveal li tt, .reveal footer tt, .reveal td tt {
+  font-size: 100%;
+}
+
+.reveal h2 code { font-size: 1em; }
+
+/* OTHER TWEAKS */
+
+.reveal .slides { min-width: 980px; max-width: 1880px; }
+
+span[lang], strong[lang] { font-style: italic; }
+em span[lang], em strong[lang] { font-style: normal; }
+
+.reveal h2 { font-size: 1.95em; }
+.reveal h2 + h4:not(.breathe) { margin-top: -0.3em; }
+.reveal p code, .reveal li code { color: #4169e1; }
+
+.reveal pre code[data-path]:after {
+  display: block;
+  font-size: 80%;
+  background: white;
+  color: #aaa;
+  content: attr(data-path);
+
+  line-height: 0.9em;
+  padding-top: 0.2em;
+  border-top: 1px solid silver;
+  margin-top: 0.5em;
+}
+.reveal pre {
+  width: 100%;
+  line-height: 1.3em;
+}
+
+.reveal pre code {
+  font-size: 1.2em;
+  max-height: none;
+}
+
+.reveal section img {
+  border: none;
+  box-shadow: none;
+}
+
+.reveal h3 code {
+  text-transform: none;
+  font-size: 130%;
+}
+
+.reveal h4 code {
+  text-transform: none;
+  font-size: 100%;
+}
+
+.reveal pre > code > .implied {
+  display: block; margin: 0;
+  opacity: 0.8;
+  background: #e9e9e9;
+}
+.reveal pre > code > .implied:first-child {
+  border-bottom: 0.1em solid silver;
+}
+.reveal pre > code > .implied:last-child {
+  margin-top: 1em;
+  border-top: 0.1em solid silver;
+}
+
+.reveal pre > code .comment > a {
+  color: #8e908c;
+  text-decoration: underline;
+}
+.reveal pre > code .comment > a:hover,
+.reveal pre > code .comment > a:focus {
+  color: black;
+}
+
+.reveal sup { font-size: 60%; }
+
+.reveal section > footer {
+  margin-top: 2em;
+  font-size: 60%;
+  opacity: 0.8;
+  line-height: 1.4em
+  /*color: rgba(255, 255, 255, 0.8);*/
+}
+
+.reveal li + li { margin-top: 0.5em; }
+
+.reveal section ul, .reveal section ol {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.reveal section ul.narrow, .reveal section ol.narrow {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.reveal ul.narrow > li + li, .reveal ol.narrow > li + li {
+  margin-top: 0.3em;
+}
+
+.reveal section p + h4, .reveal section pre + h4,
+.reveal section .fragment > h4:first-child { margin: 1em 0; }
+
+.reveal section .breathing { margin: 1em 0; }
+
+b.wrong, b.right {
+  font-weight: normal;
+  padding: 0.1em 0.5em 0.1em 0; border-radius: 0.5em;
+}
+b.wrong:empty, b.right:empty { padding-left: 0.5em; }
+b.wrong { background: #fdd; }
+b.wrong::after {
+  content: " ✖ KO";
+  font-weight: bold;
+  color: #b00;
+}
+
+b.right { background: #dfd; }
+b.right::after {
+  content: " ✔ OK";
+  font-weight: bold;
+  color: #090;
+}
+
+.reveal pre > code u, b.hl {
+  background: #fe9; padding: 0.1em 0.3em; border-radius: 0.5em;
+  text-decoration: none;
+}
+
+.theme-color-coral-blue h3 code {
+  color: yellow;
+}
+
+#qrcode {
+  border: none;
+  border-radius: 1em;
+}
+
+/*.reveal h3 + h1 {
+  margin-top: 0.4em;
+}
+*/
+.reveal h3 + h2 {
+  margin-top: 0.8em;
+}
+
+.reveal h2 + h4 {
+  margin-top: 1em;
+}
+
+.reveal p + p {
+  margin-top: 0.8em;
+}
+
+.reveal table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 90%; }
+.reveal td, .reveal th {
+  padding: 0 0.2em 0.2em;
+}
+.reveal table > thead > tr > th {
+  border: 2px solid silver;
+  border-width: 2px 0;
+}
+.reveal table > tbody > tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+#ssrr tr > td:last-child, #ssrr tr > th:last-child {
+  text-align: right;
+}
+
+.reveal section.meme.present blockquote {
+  display: none;
+}
+
+.two-columns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.two-columns > div {
+  flex-grow: 1;
+  /*flex-basis: 50%;*/
+  text-align: center;
+}
+.two-columns > div:not(:last-child) {
+  margin-right: 0.5em;
+}
+.two-columns > div:not(:first-child) {
+  margin-left: 0.5em;
+}
+
+.reveal iframe[name^="tonic-embed-"] {
+  max-width: none;
+  max-height: none;
+}
+
+.reveal section.breathing p,
+.reveal section.breathing li {
+  margin-top: 1em;
+}
+
+.reveal section#mainTitle > h1 {
+  font-size: 2.3em;
+}
+
+.reveal section#mainTitle > h1 > span {
+  display: block;
+  font-size: 77%;
+}
+
+.reveal section .translucent {
+  background: rgba(255, 255, 255, 0.6);
+  text-shadow: 0 0 0.2em white;
+}
+
+
+.reveal .tada {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  box-shadow: 0 0 30px 10px orange;
+  opacity: 0;
+  transform: scale(0.5);
+  transition-property: all;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-in;
+}
+
+.reveal .tada.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+#hadouken {
+  margin-left: -360px;
+  margin-top: -200px;
+}
+
+#shame {
+  margin-left: -300px;
+  margin-top: -90px;
+}
+#shame.visible {
+  transform: scale(1.3);
+}
+
+#nailedIt {
+  margin-left: -125px;
+  margin-top: -40px;
+}
+#nailedIt {
+  transform: scale(2);
+}
+
+.quiet {
+  color: gray;
+  opacity: 0.8;
+}
+
+.reveal p + pre {
+  margin-top: 1em;
+}
+
+#es2019 img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -960px;
+  margin-top: -540px;
+  max-width: 1920px;
+  max-height: 1080px;
+  width: 1920px;
+  height: 1080px;
+}

@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Webpack comme des grand·e·s ! • Christophe Porteneuve @ Paris Web 2017</title>
+
+  <meta name="description" content="Un atelier de 3h pour bien prendre en main Webpack à partir de zéro.">
+  <meta name="author" content="Christophe Porteneuve">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link href='css/fonts.css' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/animate.min.css">
+  <link rel="stylesheet" href="css/theme/sky.css" id="theme-basis">
+  <link rel="stylesheet" href="css/theme/pw15.css" id="theme">
+
+  <!-- Code syntax highlighting -->
+  <link rel="stylesheet" href="lib/css/prism.css">
+
+  <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+  <script>
+    if (window.location.search.match(/print-pdf/gi)) {
+      var link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.type = 'text/css'
+      link.href = 'css/print/pdf.css'
+      document.getElementsByTagName('head')[0].appendChild(link)
+    }
+  </script>
+
+  <!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-43650325-21', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body id="prioFix">
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+      <section id="mainTitle">
+        <h1>
+          Webpack
+          <span>comme des grand·e·s !</span>
+        </h1>
+        <p>
+          <small>Un atelier de <a href="http://tddsworld.com/">Christophe Porteneuve</a> at <a href="https://www.paris-web.fr/">Paris Web 2017</a></small>
+        </p>
+      </section>
+
+      <section id="whoami">
+        <h2>whoami</h2>
+
+        <pre><code data-trim class="language-js">
+const christophe = {
+  family: { wife: 'Élodie', son: 'Maxence' },
+  city: 'Paris, FR',
+  company: 'Delicious Insights',
+  trainings: [
+    'Web Apps Modernes', 'Node.js', 'Git Total',
+    'ES Total', 'Webpack'
+  ],
+  webSince: 1995,
+  claimsToFame: [
+    'Prototype.js',
+    'Ruby On Rails',
+    'Prototype and Script.aculo.us',
+    'Paris Web',
+    'NodeSchool Paris'
+  ],
+}
+          </code></pre>
+      </section>
+
+      <section data-state="theme-color-blue-yellow">
+        <section id="basics">
+          <h3>Rappelons</h3>
+          <h1>les bases</h1>
+        </section>
+
+        <section>
+          <h2>Bundlers vs. Task Runners</h2>
+
+          <p>FIXME</p>
+        </section>
+
+        <section>
+          <h2>Axes majeurs de conception</h2>
+
+          <p>FIXME</p>
+        </section>
+
+        <section>
+          <h2>Le graphe de dépendances</h2>
+
+          <p>FIXME</p>
+        </section>
+
+        <section>
+          <h2>Ce qu’on ne verra pas</h2>
+
+          <p>FIXME</p>
+        </section>
+      </section>
+      <!-- #basics -->
+
+      <section data-state="theme-color-silver-green">
+        <section id="first-bundle">
+          <h1>Mon premier bundle</h1>
+        </section>
+
+        <section>
+          <h2>Récupérer le support</h2>
+
+          <pre class="command-line" data-prompt="$" data-output="2,4"><code class="language-bash" data-trim>
+node -v
+8.6.0
+npm -v
+5.4.2
+git clone https://github.com/deliciousinsights/pw2017-webpack
+cd pw2017-webpack
+npm install
+          </code></pre>
+
+          <p><a href="https://github.com/deliciousinsights/pw2017-webpack#readme" target="_blank">deliciousinsights/pw2017-webpack</a></p>
+        </section>
+
+        <section>
+          <h2>Premier bundling</h2>
+
+          <p>On se pond deux fichiers sources, une mini-config, et on scripte…</p>
+          <p>Y’a quoi exactement dans le bundle ?</p>
+        </section>
+
+        <section>
+          <h2>Modifs et watch</h2>
+
+          <p>Quand Webpack se soucie-t-il de mes nouveaux fichiers ?</p>
+          <p>Le watcher simple dans un premier temps</p>
+        </section>
+      </section>
+      <!-- #first-bundle -->
+
+      <section data-state="theme-color-forest-yellow">
+        <section id="dev-server">
+          <h2>webpack-dev-server</h2>
+        </section>
+
+        <section>
+          <h2>À quoi ça sert ?</h2>
+
+          <p>FIXME</p>
+        </section>
+
+        <section>
+          <h2>C’est parti</h2>
+
+          <p>Installation</p>
+          <p>Lancement</p>
+          <p>Le rafraîchissement basique</p>
+          <p>Ne rien louper avec l’overlay</p>
+        </section>
+
+        <section>
+          <h2>Hot Module Replacement</h2>
+
+          <p>Principes</p>
+          <p>Mise en place côté Webpack</p>
+          <p>Activation côté client</p>
+          <p>Mieux voir quels modules sont renvoyés</p>
+          <p>Que renvoie-t-on quand ?</p>
+        </section>
+      </section>
+      <!-- #dev-server -->
+
+      <section data-state="theme-color-blue-yellow">
+        <section id="styles">
+          <h1>Ajouter des styles</h1>
+        </section>
+
+        <section>
+          <h2>Commençons simplement</h2>
+
+          <pre><code class="language-bash">git reset --hard debut-etape-3</code></pre>
+
+          <p>Des CSS « nues »</p>
+          <p>Qu’est-ce qu’un loader ?</p>
+          <p>style-loader vs. css-loader</p>
+          <p>Constater le résultat</p>
+        </section>
+
+        <section>
+          <h2>SASS, Stylus, etc.</h2>
+
+          <p>Juste un loader en plus…</p>
+        </section>
+
+        <section>
+          <h2>PostCSS et Autoprefixer</h2>
+
+          <p>Principes</p>
+          <p>Configurer Autoprefixer comme plugin</p>
+          <p>Browserlist</p>
+          <p>Définir nos exigences de compatibilité</p>
+          <p>Exemple avec <code>display: flex</code></p>
+          <p>css-loader et <code>importLoaders</code></p>
+        </section>
+
+        <section>
+          <h2>Source maps pour les styles</h2>
+
+          <p>Le réglage global</p>
+          <p>La nécessité de drapeaux <em>par loader</em> de style…</p>
+        </section>
+      </section>
+      <!-- #styles -->
+
+      <section data-state="theme-color-silver-green">
+        <section id="modularize">
+          <h1>Modulariser</h1>
+          <h3>la configuration</h3>
+        </section>
+
+        <!-- - webpack-merge
+        - Notre configuration réécrite avec
+        - Livrer les fichiers CSS pour la production -->
+
+        <section>
+          <h2>FIXME</h2>
+        </section>
+      </section>
+      <!-- #modularize -->
+
+      <section data-state="theme-color-forest-yellow">
+        <section id="images">
+          <h1>Ajouter des images</h1>
+        </section>
+
+        <!-- - file-loader et url-loader
+- Impact sur les CSS
+ -->
+
+        <section>
+          <h2>FIXME</h2>
+        </section>
+      </section>
+      <!-- #images -->
+
+      <section data-state="theme-color-blue-yellow">
+        <section id="babel">
+          <h1>Utiliser Babel</h1>
+        </section>
+
+        <!--
+          - Ajout et configuration
+- Le preset env ; centraliser avec PostCSS
+- Exploiter la syntaxe de modules natifs pour le *tree shaking*
+
+         -->
+        <section>
+          <h2>FIXME</h2>
+        </section>
+      </section>
+      <!-- #babel -->
+
+      <section data-state="theme-color-silver-green">
+        <section id="minify">
+          <h1>Minifier</h1>
+        </section>
+
+        <!-- - Minifier le JS
+- Minifier les CSS
+- Pistes pour les images
+  - https://www.npmjs.com/package/image-webpack-loader
+  - https://www.npmjs.com/package/imagemin-webpack-plugin
+  - https://www.npmjs.com/package/webpack-spritesmith
+ -->
+
+        <section>
+          <h2>FIXME</h2>
+        </section>
+      </section>
+      <!-- #minify -->
+
+      <section data-state="theme-color-forest-yellow">
+        <section id="cache">
+          <h3>Améliorer la</h3>
+          <h1>cachabilité</h1>
+        </section>
+
+        <!-- - « Vendorer » automatiquement
+- Hashes intelligents
+- Sortir le manifeste
+ -->
+        <section>
+          <h2>FIXME</h2>
+        </section>
+      </section>
+      <!-- #cache -->
+
+      <section>
+        <h2>En savoir (beaucoup) plus</h2>
+
+        <p><a href="https://delicious-insights.com/fr/formations/webpack/">Notre formation Webpack !</a></p>
+        <p><a href="https://webpack.js.org/">Les docs officielles</a></p>
+        <p><a href="https://survivejs.com/webpack/">SurviveJS</a></p>
+        <p><a href="https://www.udemy.com/webpack-2-the-complete-developers-guide/">Le cours sur Udemy</a></p>
+      </section>
+
+      <section>
+        <h1>Merci !</h1>
+        <h3>Et que Webpack soit avec vous.</h3>
+        <br>
+        <p>Christophe Porteneuve</p>
+        <p><a href="https://twitter.com/porteneuve">@porteneuve</a></p>
+
+        <p class="breathing">
+          Les slides sont sur <a href="http://bit.ly/pw-webpack">bit.ly/pw-webpack</a><br/>
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="plugin/highlight/prism.js"></script>
+  <script src="js/reveal.js"></script>
+
+  <script>
+    // Full list of configuration options available here: // https://github.com/hakimel/reveal.js#configuration
+    /* global Reveal */
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+
+      width: '95%',
+      height: '90%',
+
+      theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+      transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+      // Parallax scrolling
+      // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+      // parallaxBackgroundSize: '2100px 900px',
+
+      // Optional libraries used to extend on reveal.js
+      dependencies: [
+        { src: 'lib/js/classList.js', condition: function () { return !document.body.classList } },
+        { src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]') } },
+        { src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]') } },
+        { src: 'plugin/zoom-js/zoom.js', async: true, condition: function () { return !!document.body.classList } },
+        { src: 'plugin/notes/notes.js', async: true, condition: function () { return !!document.body.classList } }
+      ]
+    })
+  </script>
+
+</body>
+
+</html>
