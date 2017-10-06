@@ -1,4 +1,4 @@
-require('./styles/footer.styl')
+import './styles/footer.styl'
 
 document.body.insertAdjacentHTML(
   'beforeend',

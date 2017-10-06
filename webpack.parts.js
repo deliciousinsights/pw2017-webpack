@@ -11,6 +11,27 @@ exports.hmr = () => ({
   ],
 })
 
+// JS (Babel)
+// ----------
+
+exports.babelize = ({ include, exclude }) => ({
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include,
+        exclude,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['env', { modules: false }]],
+          },
+        },
+      },
+    ],
+  },
+})
+
 // CSS, SASS & Stylus
 // ------------------
 

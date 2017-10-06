@@ -16,6 +16,7 @@ const CORE_CONFIG = merge([
       publicPath: '/',
     },
   },
+  parts.babelize({ include: PATHS.app }),
   parts.loadImages(),
 ])
 
