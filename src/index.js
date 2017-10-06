@@ -15,6 +15,10 @@ window.Notification.requestPermission(status => {
   }
 })
 
+if (process.env.NODE_ENV !== 'production') {
+  console.log('YOLO DEV')
+}
+
 if (module.hot) {
   module.hot.accept()
 }

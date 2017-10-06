@@ -1,4 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const merge = require('webpack-merge')
 const webpack = require('webpack')
 
 // HMR
@@ -55,6 +56,41 @@ exports.loadImages = () => ({
       },
     ],
   },
+})
+
+// Minification
+// ------------
+
+exports.enableAutoMinifiers = () => ({
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
+    }),
+  ],
+})
+
+exports.minifyAll = () =>
+  merge([
+    exports.stripNonProductionCode(),
+    exports.enableAutoMinifiers(),
+    exports.minifyJS(),
+  ])
+
+exports.minifyJS = () => ({
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+    }),
+  ],
+})
+
+exports.stripNonProductionCode = () => ({
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': { NODE_ENV: '"production"' },
+    }),
+  ],
 })
 
 // Fonctions d’assistance internes
