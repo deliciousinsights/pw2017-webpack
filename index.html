@@ -62,7 +62,10 @@
           <span>comme des grand·e·s !</span>
         </h1>
         <p>
-          <small>Un atelier de <a href="http://tddsworld.com/">Christophe Porteneuve</a> at <a href="https://www.paris-web.fr/">Paris Web 2017</a></small>
+          <small>Un atelier de
+            <a href="http://tddsworld.com/">Christophe Porteneuve</a> at
+            <a href="https://www.paris-web.fr/">Paris Web 2017</a>
+          </small>
         </p>
       </section>
 
@@ -99,25 +102,50 @@ const christophe = {
         <section>
           <h2>Bundlers vs. Task Runners</h2>
 
-          <p>FIXME</p>
+          <p>
+            Webpack est un
+            <em>bundler</em>, pas un
+            <em>task runner</em>
+            <br/> (De ce point de vue, il se rapproche de Brunch et Broccoli)
+          </p>
+          <p>Intérêt : moins de config, plus d’optimisations possibles</p>
         </section>
 
         <section>
-          <h2>Axes majeurs de conception</h2>
+          <h2>Points forts particuliers</h2>
 
-          <p>FIXME</p>
+          <p>Vitesse</p>
+          <p>Hot Module Replacement (HMR)</p>
+          <p>Approche graphe (on y vient)</p>
+          <p>
+            Richesse d’optimisations proposées
+            <br/> (en particulier autour du
+            <em>bundle splitting</em> et
+            <em>code splitting</em>)
+          </p>
         </section>
 
         <section>
           <h2>Le graphe de dépendances</h2>
 
-          <p>FIXME</p>
+          <p>
+            <img src="./images/webpack-dep-graph.png" alt="Diagramme illustratif d’un graphe de dépendances Webpack" />
+          </p>
         </section>
 
         <section>
           <h2>Ce qu’on ne verra pas</h2>
 
-          <p>FIXME</p>
+          <p>L’intégration du serveur de dev aux nôtres</p>
+          <p>Les finesses de gestion du HMR</p>
+          <p>Les parallélisations et mises en cache</p>
+          <p>L’externalisation et les cibles alternatives de build</p>
+          <p>Le
+            <em>code splitting</em>
+          </p>
+          <p>Les passerelles avec React (notamment React-Router et Redux)</p>
+          <p>Les loaders et plugins personnalisés</p>
+          <p>…</p>
         </section>
       </section>
       <!-- #basics -->
@@ -140,7 +168,28 @@ cd pw2017-webpack
 npm install
           </code></pre>
 
-          <p><a href="https://github.com/deliciousinsights/pw2017-webpack#readme" target="_blank">deliciousinsights/pw2017-webpack</a></p>
+          <p>
+            <a href="https://github.com/deliciousinsights/pw2017-webpack#readme" target="_blank">deliciousinsights/pw2017-webpack</a>
+          </p>
+        </section>
+
+        <section>
+          <h2>Le fichier de configuration</h2>
+
+          <p>Juste un module CommonJS</p>
+          <p>On est donc libres de construire l’objet exporté comme on veut !</p>
+          <p>Peut donc être hyper dynamique, réactif à l’environnement, etc.</p>
+          <p>A minima :</p>
+
+          <pre><code class="language-js" data-trim>
+module.exports = {
+  entry: …,        // Chemin(s) absolu(s) de « module »
+  output: {
+    path: '…',     // Chemin absolu du dossier destinataire
+    filename: '…',
+  }
+}
+          </code></pre>
         </section>
 
         <section>
@@ -167,7 +216,18 @@ npm install
         <section>
           <h2>À quoi ça sert ?</h2>
 
-          <p>FIXME</p>
+          <p>À plein de trucs :</p>
+          <p>
+            Surveiller les fichiers et déclencher des
+            <em>rebuilds</em>
+            <br/> (attention à la sauvegarde automatique dans votre EDI/éditeur)
+          </p>
+          <p>Fournir un service HTTP par-dessus nos builds</p>
+          <p>Builder en mémoire pour aller plus vite, garder en cache au passage</p>
+          <p>Faire du rafraîchissement automatique</p>
+          <p>Permettre d’aller plus loin avec le
+            <em>Hot Module Replacement</em>
+          </p>
         </section>
 
         <section>
@@ -199,7 +259,10 @@ npm install
         <section>
           <h2>Commençons simplement</h2>
 
-          <pre><code class="language-bash">git reset --hard debut-etape-3</code></pre>
+          <pre class="command-line" data-prompt="$"><code class="language-bash" data-trim>
+git reset --hard debut-etape-3
+npm install
+          </code></pre>
 
           <p>Des CSS « nues »</p>
           <p>Qu’est-ce qu’un loader ?</p>
@@ -220,15 +283,20 @@ npm install
           <p>Configurer Autoprefixer comme plugin</p>
           <p>Browserlist</p>
           <p>Définir nos exigences de compatibilité</p>
-          <p>Exemple avec <code>display: flex</code></p>
-          <p>css-loader et <code>importLoaders</code></p>
+          <p>Exemple avec
+            <code>display: flex</code>
+          </p>
+          <p>css-loader et
+            <code>importLoaders</code>
+          </p>
         </section>
 
         <section>
           <h2>Source maps pour les styles</h2>
 
           <p>Le réglage global</p>
-          <p>La nécessité de drapeaux <em>par loader</em> de style…</p>
+          <p>La nécessité de drapeaux
+            <em>par loader</em> de style…</p>
         </section>
       </section>
       <!-- #styles -->
@@ -239,12 +307,45 @@ npm install
           <h3>la configuration</h3>
         </section>
 
-        <!-- - webpack-merge
-        - Notre configuration réécrite avec
-        - Livrer les fichiers CSS pour la production -->
+        <section>
+          <h2>Ça devient le bordel…</h2>
+
+          <p>Ça commence à pas mal grandir…</p>
+          <p>Si ça continue on va se croire dans Gulp !</p>
+          <p>En plus y'a la question de la bascule de mode développement / production</p>
+          <p>Comment s’y retrouver ?</p>
+          <p>Comment éviter le copier-coller bête d’un projet à l’autre ?</p>
+        </section>
 
         <section>
-          <h2>FIXME</h2>
+          <h2>webpack-merge</h2>
+
+          <pre><code class="language-bash">npm install --save-dev webpack-merge</code></pre>
+
+          <p>La difficulté de base : extraire les multiples impacts d’une configuration précise (ex. HMR, extraction CSS…)</p>
+          <p>Le module permet d’exprimer des ensembles de fragments de configuration, injectables à l’envi.</p>
+          <p>Je vous déroule le
+            <em>refactoring</em> de découpe…</p>
+        </section>
+
+        <section>
+          <h2>Environnements</h2>
+
+          <p>Exporter une fonction</p>
+          <p>Le drapeau
+            <code>--env</code>
+          </p>
+          <p>Factoriser nos configurations de développement vs. production</p>
+        </section>
+
+        <section>
+          <h2>Extraire les fichiers CSS pour la livraison</h2>
+
+          <p>extract-text-webpack-plugin</p>
+          <p>Deux parties : l’extracteur et les appels à l’extraction</p>
+          <p>Ajustement de notre configuration de production</p>
+
+          <pre><code class="language-bash">git reset --hard etape-4</code></pre>
         </section>
       </section>
       <!-- #modularize -->
@@ -254,12 +355,29 @@ npm install
           <h1>Ajouter des images</h1>
         </section>
 
-        <!-- - file-loader et url-loader
-- Impact sur les CSS
- -->
+        <section>
+          <h2>file-loader et url-loader</h2>
+
+          <pre><code class="language-bash" data-trim>
+git reset --hard debut-etape-5
+npm install
+          </code></pre>
+
+          <p>Que fait le premier ?</p>
+          <p>Pourquoi préférer le second ?</p>
+          <p>Configuration avec une limite utile</p>
+          <p>Examiner la différence</p>
+          <p>Et pour le build de production ?</p>
+        </section>
 
         <section>
-          <h2>FIXME</h2>
+          <h2>Et les images dans les styles ?</h2>
+
+          <p>On examine toutes les syntaxes
+            <code>url(…)</code>
+          </p>
+          <p>Super pratique !</p>
+          <p>On peut même aller chercher la même fonctionnalité pour les sources d’images dans HTML, JSX…</p>
         </section>
       </section>
       <!-- #images -->
@@ -269,14 +387,25 @@ npm install
           <h1>Utiliser Babel</h1>
         </section>
 
-        <!--
-          - Ajout et configuration
-- Le preset env ; centraliser avec PostCSS
-- Exploiter la syntaxe de modules natifs pour le *tree shaking*
-
-         -->
         <section>
-          <h2>FIXME</h2>
+          <h2>Le loader</h2>
+
+          <p>Ajout et configuration</p>
+          <p>Presets</p>
+          <p>Le preset
+            <code>env</code>
+          </p>
+          <p>Peut-on réutiliser
+            <code>.browserslistrc</code> ?</p>
+        </section>
+
+        <section>
+          <h2>Tree shaking ?</h2>
+
+          <p>Intérêt et limites actuelles</p>
+          <p>Exemple avec divers imports de lodash</p>
+          <p>Passer en syntaxe modules… mais pas partout ?</p>
+          <p>Impact sur le rebuild</p>
         </section>
       </section>
       <!-- #babel -->
@@ -286,16 +415,37 @@ npm install
           <h1>Minifier</h1>
         </section>
 
-        <!-- - Minifier le JS
-- Minifier les CSS
-- Pistes pour les images
-  - https://www.npmjs.com/package/image-webpack-loader
-  - https://www.npmjs.com/package/imagemin-webpack-plugin
-  - https://www.npmjs.com/package/webpack-spritesmith
- -->
+        <section>
+          <h2>Minifier JS</h2>
+
+          <p>UglifyJS, sa vie, son œuvre</p>
+          <p>Babili ? Un autre ?</p>
+          <p>Activer les source maps quand même…</p>
+          <p>Environnements et code mort en production</p>
+        </section>
 
         <section>
-          <h2>FIXME</h2>
+          <h2>Minifier CSS</h2>
+
+          <p>cssnano est déjà utilisable</p>
+          <p>Avec un peu de config : clean-css, etc.</p>
+          <p>Comment activier la minification intégrée aux loaders ?</p>
+        </section>
+
+        <section>
+          <h2>Optimiser les images ?</h2>
+
+          <p>On ne va pas s’y amuser, mais y’a plein d’options, par exemple :</p>
+          <p>
+            <a href="https://www.npmjs.com/package/image-webpack-loader">image-webpack-loader</a>
+          </p>
+          <p>
+            <a href="https://www.npmjs.com/package/imagemin-webpack-plugin">imagemin-webpack-plugin</a>
+          </p>
+          <p>
+            <a href="https://www.npmjs.com/package/webpack-spritesmith">webpack-spritesmith</a>
+          </p>
+          <p>…</p>
         </section>
       </section>
       <!-- #minify -->
@@ -306,12 +456,30 @@ npm install
           <h1>cachabilité</h1>
         </section>
 
-        <!-- - « Vendorer » automatiquement
-- Hashes intelligents
-- Sortir le manifeste
- -->
         <section>
-          <h2>FIXME</h2>
+          <h2>Vendoring automatique</h2>
+
+          <p>C’est quoi, « vendorer » ?</p>
+          <p>CommonsChunkPlugin</p>
+          <p>Principes de fonctionnement</p>
+          <p>Mise en œuvre dans notre projet</p>
+        </section>
+
+        <section>
+          <h2>Hashes intelligents</h2>
+
+          <p>Pourquoi mettre des hashes dans les noms de fichiers ?</p>
+          <p>
+            <code>hash</code>,
+            <code>chunkhash</code> et
+            <code>contenthash</code>
+          </p>
+          <p>Limitation de la taille de hash utilisée</p>
+          <p>Mise en œuvre</p>
+          <p>Soucis avec les noms qui changent tout le temps…</p>
+          <p>html-webpack-plugin</p>
+          <p>clean-webpack-plugin</p>
+          <p>Extraction futée du manifeste pour des mises à jour ciblées</p>
         </section>
       </section>
       <!-- #cache -->
@@ -319,10 +487,18 @@ npm install
       <section>
         <h2>En savoir (beaucoup) plus</h2>
 
-        <p><a href="https://delicious-insights.com/fr/formations/webpack/">Notre formation Webpack !</a></p>
-        <p><a href="https://webpack.js.org/">Les docs officielles</a></p>
-        <p><a href="https://survivejs.com/webpack/">SurviveJS</a></p>
-        <p><a href="https://www.udemy.com/webpack-2-the-complete-developers-guide/">Le cours sur Udemy</a></p>
+        <p>
+          <a href="https://delicious-insights.com/fr/formations/webpack/">Notre formation Webpack !</a>
+        </p>
+        <p>
+          <a href="https://webpack.js.org/">Les docs officielles</a>
+        </p>
+        <p>
+          <a href="https://survivejs.com/webpack/">SurviveJS</a>
+        </p>
+        <p>
+          <a href="https://www.udemy.com/webpack-2-the-complete-developers-guide/">Le cours sur Udemy</a>
+        </p>
       </section>
 
       <section>
@@ -330,10 +506,14 @@ npm install
         <h3>Et que Webpack soit avec vous.</h3>
         <br>
         <p>Christophe Porteneuve</p>
-        <p><a href="https://twitter.com/porteneuve">@porteneuve</a></p>
+        <p>
+          <a href="https://twitter.com/porteneuve">@porteneuve</a>
+        </p>
 
         <p class="breathing">
-          Les slides sont sur <a href="http://bit.ly/pw-webpack">bit.ly/pw-webpack</a><br/>
+          Les slides sont sur
+          <a href="http://bit.ly/pw-webpack">bit.ly/pw-webpack</a>
+          <br/>
         </p>
       </section>
 
