@@ -7,14 +7,17 @@ const PATHS = {
   target: path.join(__dirname, 'build'),
 }
 
-const CORE_CONFIG = {
-  entry: PATHS.app,
-  output: {
-    path: PATHS.target,
-    filename: 'bundle.js',
-    publicPath: '/',
+const CORE_CONFIG = merge([
+  {
+    entry: PATHS.app,
+    output: {
+      path: PATHS.target,
+      filename: 'bundle.js',
+      publicPath: '/',
+    },
   },
-}
+  parts.loadImages(),
+])
 
 const devConfig = () =>
   merge([

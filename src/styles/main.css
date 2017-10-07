@@ -1,10 +1,27 @@
+html,
 body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: url(../images/background.jpg);
+  background-size: cover;
   font-family: Georgia, serif;
   font-size: 16px;
   color: black;
-  background: white;
 }
 
 .foobar {
   display: flex;
+}
+
+.iconic {
+  background-image: url(../images/icon.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  height: 64px;
+  line-height: 64px;
+  padding-left: 70px;
 }

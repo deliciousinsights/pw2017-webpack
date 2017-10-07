@@ -1,12 +1,18 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpack = require('webpack')
 
+// HMR
+// ---
+
 exports.hmr = () => ({
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
   ],
 })
+
+// CSS, SASS & Stylus
+// ------------------
 
 exports.extractCSS = () => extractStyling({ ext: 'css' })
 exports.extractSASS = () => extractStyling({ ext: 'scss', name: 'sass' })
@@ -15,6 +21,20 @@ exports.extractStylus = () => extractStyling({ ext: 'styl', name: 'stylus' })
 exports.loadCSS = () => loadStyling({ ext: 'css' })
 exports.loadSASS = () => loadStyling({ ext: 'scss', name: 'sass' })
 exports.loadStylus = () => loadStyling({ ext: 'styl', name: 'stylus' })
+
+// Images
+// ------
+
+exports.loadImages = () => ({
+  module: {
+    rules: [
+      {
+        test: /\.(?:jpe?g|png|gif)$/i,
+        use: { loader: 'url-loader', options: { limit: 10000 } },
+      },
+    ],
+  },
+})
 
 // Fonctions d’assistance internes
 // -------------------------------
