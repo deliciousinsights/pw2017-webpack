@@ -106,6 +106,12 @@ exports.autoVendor = () => ({
   ],
 })
 
+exports.hashFiles = () => ({
+  output: {
+    filename: '[name].[chunkhash:8].js',
+  },
+})
+
 // Fonctions d’assistance internes
 // -------------------------------
 
@@ -144,7 +150,7 @@ function extractStyling({ ext, name }) {
   cssPlugin =
     cssPlugin ||
     new ExtractTextPlugin({
-      filename: '[name].css',
+      filename: '[name].[contenthash:8].css',
       allChunks: true,
     })
 
