@@ -105,6 +105,10 @@ exports.autoVendor = () => ({
       minChunks: ({ resource }) =>
         resource && resource.includes('node_modules'),
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: +Infinity,
+    }),
   ],
 })
 
