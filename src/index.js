@@ -1,5 +1,6 @@
 import './styles/main.css'
 import './styles/titles.scss'
+import uniq from 'lodash/uniq'
 
 document.body.innerHTML = `
   <h1>Bonjour Webpack !</h1>
@@ -18,6 +19,8 @@ window.Notification.requestPermission(status => {
 if (process.env.NODE_ENV !== 'production') {
   console.log('YOLO DEV')
 }
+
+console.log(uniq(['foo', 'bar', 'baz', 'foo', 'baz']))
 
 if (module.hot) {
   module.hot.accept()

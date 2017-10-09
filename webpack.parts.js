@@ -93,6 +93,19 @@ exports.stripNonProductionCode = () => ({
   ],
 })
 
+// Cache optimization
+// ------------------
+
+exports.autoVendor = () => ({
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: ({ resource }) =>
+        resource && resource.includes('node_modules'),
+    }),
+  ],
+})
+
 // Fonctions d’assistance internes
 // -------------------------------
 
@@ -131,7 +144,7 @@ function extractStyling({ ext, name }) {
   cssPlugin =
     cssPlugin ||
     new ExtractTextPlugin({
-      filename: 'app.css',
+      filename: '[name].css',
       allChunks: true,
     })
 

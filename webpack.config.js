@@ -9,15 +9,16 @@ const PATHS = {
 
 const CORE_CONFIG = merge([
   {
-    entry: PATHS.app,
+    entry: { app: PATHS.app },
     output: {
+      filename: '[name].js',
       path: PATHS.target,
-      filename: 'bundle.js',
       publicPath: '/',
     },
   },
   parts.babelize({ include: PATHS.app }),
   parts.loadImages(),
+  parts.autoVendor(),
 ])
 
 const devConfig = () =>
