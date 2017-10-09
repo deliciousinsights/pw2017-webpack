@@ -1,4 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HTMLPlugin = require('html-webpack-plugin')
 const merge = require('webpack-merge')
 const webpack = require('webpack')
 
@@ -110,6 +111,10 @@ exports.hashFiles = () => ({
   output: {
     filename: '[name].[chunkhash:8].js',
   },
+})
+
+exports.htmlStub = () => ({
+  plugins: [new HTMLPlugin()],
 })
 
 // Fonctions d’assistance internes
