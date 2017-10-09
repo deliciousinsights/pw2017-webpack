@@ -1,3 +1,4 @@
+const CleanupPlugin = require('clean-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HTMLPlugin = require('html-webpack-plugin')
 const merge = require('webpack-merge')
@@ -105,6 +106,10 @@ exports.autoVendor = () => ({
         resource && resource.includes('node_modules'),
     }),
   ],
+})
+
+exports.cleanup = ({ path, exclude }) => ({
+  plugins: [new CleanupPlugin(path, { exclude })],
 })
 
 exports.hashFiles = () => ({

@@ -42,6 +42,7 @@ const devConfig = () =>
 const prodConfig = () =>
   merge([
     CORE_CONFIG,
+    parts.cleanup({ path: PATHS.target }),
     parts.hashFiles(),
     parts.extractCSS(),
     parts.extractSASS(),
