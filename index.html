@@ -158,6 +158,10 @@ const christophe = {
         <section>
           <h2>Récupérer le support</h2>
 
+          <p>Suivez les
+            <a href="https://github.com/deliciousinsights/pw2017-webpack#readme">instructions de préparation</a>
+          </p>
+
           <pre class="command-line" data-prompt="$" data-output="2,4"><code class="language-bash" data-trim>
 node -v
 8.6.0
@@ -195,12 +199,35 @@ module.exports = {
         <section>
           <h2>Premier bundling</h2>
 
-          <p>On se pond deux fichiers sources, une mini-config, et on scripte…</p>
-          <p>Y’a quoi exactement dans le bundle ?</p>
+          <pre><code class="language-js" data-trim data-path="webpack.config.js" data-keep-tags="u">
+const path = require('path')
+
+const PATHS = {
+  app: path.join(__dirname, 'src'),
+  target: path.join(__dirname, 'build'),
+}
+
+module.exports = {
+  entry: PATHS.app,
+  output: {
+    path: PATHS.target,
+    filename: 'bundle.js',
+  },
+}
+          </code></pre>
         </section>
 
         <section>
           <h2>Modifs et watch</h2>
+
+          <pre><code class="language-json" data-trim data-path="package.json" data-keep-tags="u">
+…
+"scripts": {
+  "build": "webpack",
+  "dev": "webpack --watch"
+},
+…
+          </code></pre>
 
           <p>Quand Webpack se soucie-t-il de mes nouveaux fichiers ?</p>
           <p>Le watcher simple dans un premier temps</p>
@@ -233,8 +260,32 @@ module.exports = {
         <section>
           <h2>C’est parti</h2>
 
-          <p>Installation</p>
-          <p>Lancement</p>
+          <div class="two-columns">
+            <div>
+              <pre class="command-line" data-prompt="$"><code class="language-bash" data-trim>
+npm install --save-dev webpack-dev-server
+              </code></pre>
+              <pre><code class="language-json" data-trim data-path="package.json" data-keep-tags="u">
+…
+"scripts": {
+  "build": "webpack",
+  "dev": "webpack<u>-dev-server</u>"
+},
+…
+              </code></pre>
+            </div>
+            <div>
+              <pre><code class="language-js" data-trim data-path="webpack.config.js" data-keep-tags="u">
+module.exports = {
+<u>  devServer: {
+    contentBase: PATHS.target,
+    overlay: true,
+  },</u>
+  entry: PATHS.app,
+  …
+              </code></pre>
+            </div>
+          </div>
           <p>Le rafraîchissement basique</p>
           <p>Ne rien louper avec l’overlay</p>
         </section>
@@ -243,9 +294,34 @@ module.exports = {
           <h2>Hot Module Replacement</h2>
 
           <p>Principes</p>
-          <p>Mise en place côté Webpack</p>
-          <p>Activation côté client</p>
-          <p>Mieux voir quels modules sont renvoyés</p>
+          <div class="two-columns">
+            <div>
+              <pre><code class="language-js" data-trim data-path="webpack.config.js" data-keep-tags="u">
+module.exports = {
+  devServer: {
+    contentBase: PATHS.target,
+    <u>hot: true,</u>
+    overlay: true,
+  },</u>
+  …
+<u>  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+  ],</u>
+}
+              </code></pre>
+            </div>
+            <div>
+              <pre><code class="language-js" data-trim data-path="src/index.js" data-keep-tags="u">
+…
+require('./footer')
+
+<u>if (module.hot) {
+  module.hot.accept()
+}</u>
+              </code></pre>
+            </div>
+          </div>
           <p>Que renvoie-t-on quand ?</p>
         </section>
       </section>
@@ -259,12 +335,35 @@ module.exports = {
         <section>
           <h2>Commençons simplement</h2>
 
-          <pre class="command-line" data-prompt="$"><code class="language-bash" data-trim>
+          <div class="two-columns">
+            <div>
+              <pre class="command-line" data-prompt="$"><code class="language-bash" data-trim>
 git reset --hard debut-etape-3
 npm install
-          </code></pre>
+              </code></pre>
 
-          <p>Des CSS « nues »</p>
+              <pre><code class="language-js" data-path="src/index.js" data-trim data-keep-tags="u">
+…
+require('./footer')
+
+<u>require('./styles/main.css')</u>
+…
+              </code></pre>
+            </div>
+            <div>
+              <pre><code class="language-js" data-path="webpack.config.js" data-trim data-keep-tags="u">
+module: {
+  rules: [
+    {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader'],
+    },
+  ],
+},
+              </code></pre>
+            </div>
+          </div>
+
           <p>Qu’est-ce qu’un loader ?</p>
           <p>style-loader vs. css-loader</p>
           <p>Constater le résultat</p>
@@ -274,29 +373,86 @@ npm install
           <h2>SASS, Stylus, etc.</h2>
 
           <p>Juste un loader en plus…</p>
+          <div class="two-columns">
+            <div>
+              <pre><code class="language-js" data-path="src/index.js" data-trim data-keep-tags="u">
+…
+require('./styles/main.css')
+<u>require('./styles/titles.scss')</u>
+…
+              </code></pre>
+            </div>
+            <div>
+              <pre><code class="language-js" data-path="webpack.config.js" data-trim data-keep-tags="u">
+module: {
+  rules: [
+    …
+    {
+      test: /\.<u>scss</u>$/,
+      use: [
+        'style-loader',
+        'css-loader',
+        <u>'sass-loader'</u>
+      ],
+    },
+  ],
+},
+              </code></pre>
+            </div>
+          </div>
         </section>
 
         <section>
           <h2>PostCSS et Autoprefixer</h2>
 
           <p>Principes</p>
-          <p>Configurer Autoprefixer comme plugin</p>
-          <p>Browserlist</p>
-          <p>Définir nos exigences de compatibilité</p>
+          <div class="two-columns">
+            <div>
+              <pre><code class="language-js" data-path="webpack.config.js" data-trim data-keep-tags="u">
+…
+use: [
+  // style-loader, css-loader, puis :
+<u>  {
+    loader: 'postcss-loader',
+    options: {
+      plugins: () => [
+        require('autoprefixer')()
+      ],
+    },
+  },</u>
+  // sass-loader / stylus-loader éventuels
+],
+              </code></pre>
+            </div>
+            <div>
+              <pre><code class="language-json" data-path=".browserslistrc" data-trim>
+> 1%
+Last 2 versions
+IE 9
+              </code></pre>
+            </div>
+          </div>
           <p>Exemple avec
             <code>display: flex</code>
-          </p>
-          <p>css-loader et
-            <code>importLoaders</code>
           </p>
         </section>
 
         <section>
           <h2>Source maps pour les styles</h2>
-
-          <p>Le réglage global</p>
-          <p>La nécessité de drapeaux
-            <em>par loader</em> de style…</p>
+          <pre><code class="language-js" data-path="webpack.config.js" data-trim data-keep-tags="u">
+  …
+        use: [
+          { loader: 'css-loader'<u>, options: { sourceMap: true }</u> },
+          { loader: 'postcss-loader, options: {
+            plugins: () => [require('autoprefixer')()],
+            <u>sourceMap: true,</u>
+          }},
+          { loader: 'sass-loader'<u>, options: { sourceMap: true }</u> },
+        ],
+  …
+<u>  devtool: 'cheap-module-source-map',</u>
+}
+          </code></pre>
         </section>
       </section>
       <!-- #styles -->
@@ -320,7 +476,7 @@ npm install
         <section>
           <h2>webpack-merge</h2>
 
-          <pre><code class="language-bash">npm install --save-dev webpack-merge</code></pre>
+          <pre class="command-line" data-prompt="$"><code class="language-bash">npm install --save-dev webpack-merge</code></pre>
 
           <p>La difficulté de base : extraire les multiples impacts d’une configuration précise (ex. HMR, extraction CSS…)</p>
           <p>Le module permet d’exprimer des ensembles de fragments de configuration, injectables à l’envi.</p>
@@ -331,21 +487,86 @@ npm install
         <section>
           <h2>Environnements</h2>
 
-          <p>Exporter une fonction</p>
-          <p>Le drapeau
-            <code>--env</code>
-          </p>
-          <p>Factoriser nos configurations de développement vs. production</p>
+          <div class="two-columns">
+            <div>
+              <pre><code class="language-js" data-path="webpack.config.js" data-trim data-keep-tags="u">
+const devConfig = () => merge([
+  CORE_CONFIG,
+  …
+])
+
+const prodConfig = () => merge([
+  CORE_CONFIG,
+  …
+])
+
+module.exports = <u>(env = process.env.NODE_ENV) =></u>
+  env === 'production'
+    ? prodConfig()
+    : devConfig()
+              </code></pre>
+            </div>
+            <div>
+              <pre><code class="language-json" data-path="package.json" data-trim data-keep-tags="u">
+"build": "webpack<u> --env production</u>",
+              </code></pre>
+            </div>
+          </div>
         </section>
 
         <section>
-          <h2>Extraire les fichiers CSS pour la livraison</h2>
+          <h2>Extraire les fichiers CSS</h2>
 
           <p>extract-text-webpack-plugin</p>
           <p>Deux parties : l’extracteur et les appels à l’extraction</p>
           <p>Ajustement de notre configuration de production</p>
 
-          <pre><code class="language-bash">git reset --hard etape-4</code></pre>
+          <pre class="command-line" data-prompt="$"><code class="language-bash">git reset --hard etape-4</code></pre>
+        </section>
+
+        <section>
+          <h2>Extraire les fichiers CSS (suite)</h2>
+
+          <div class="two-columns">
+            <div>
+              Avant :
+              <pre><code class="language-js" data-path="(Configuration Webpack obtenue)" data-trim>
+module: {
+  rules: [
+    {
+      …
+      use: [
+        'style-loader',
+        'css-loader',
+        'sass-loader'
+      ],
+      …
+    }
+  ]
+}
+              </code></pre>
+            </div>
+            <div>
+              Après :
+              <pre><code class="language-js" data-path="(Configuration Webpack obtenue)" data-trim data-keep-tags="u">
+const ExtractTextPlugin =
+  require('extract-text-webpack-plugin')
+
+const cssPlugin = new ExtractTextPlugin({
+  filename: 'app.css',
+  allChunks: true,
+})
+…
+plugins: […, cssPlugin],
+…
+        use: cssPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
+…
+              </code></pre>
+            </div>
+          </div>
         </section>
       </section>
       <!-- #modularize -->
@@ -358,26 +579,49 @@ npm install
         <section>
           <h2>file-loader et url-loader</h2>
 
-          <pre><code class="language-bash" data-trim>
+          <div class="two-columns">
+            <div>
+              <pre class="command-line" data-prompt="$"><code class="language-bash" data-trim>
 git reset --hard debut-etape-5
 npm install
-          </code></pre>
+              </code></pre>
+              <pre><code class="language-css" data-path="src/styles/main.css">
+…
+background: url(../images/background.jpg);
+…
+background: url(../images/icon.png);
+…
+              </code></pre>
+            </div>
+            <div>
+              <pre><code class="language-js" data-path="webpack.parts.js" data-trim>
+exports.loadImages = () => ({
+  module: {
+    rules: [
+      {
+        test: /\.(?:jpe?g|png|gif)$/i,
+        use: {
+          loader: 'url-loader',
+          options: { limit: 10000 }
+        },
+      },
+    ],
+  },
+})
+              </code></pre>
+            </div>
+          </div>
 
-          <p>Que fait le premier ?</p>
-          <p>Pourquoi préférer le second ?</p>
-          <p>Configuration avec une limite utile</p>
-          <p>Examiner la différence</p>
-          <p>Et pour le build de production ?</p>
+          <p>Examiner la différence, en dev et en prod</p>
         </section>
 
         <section>
-          <h2>Et les images dans les styles ?</h2>
+          <h2>Et hors des styles ?</h2>
 
-          <p>On examine toutes les syntaxes
-            <code>url(…)</code>
-          </p>
-          <p>Super pratique !</p>
-          <p>On peut même aller chercher la même fonctionnalité pour les sources d’images dans HTML, JSX…</p>
+          <p>Ça marche de base pour les
+            <code>require</code> /
+            <code>import</code> dans JS, comme d’hab.</p>
+          <p>On peut même aller chercher la même fonctionnalité pour les sources d’images dans HTML, JSX, Slim…</p>
         </section>
       </section>
       <!-- #images -->
@@ -390,13 +634,25 @@ npm install
         <section>
           <h2>Le loader</h2>
 
-          <p>Ajout et configuration</p>
-          <p>Presets</p>
-          <p>Le preset
-            <code>env</code>
-          </p>
-          <p>Peut-on réutiliser
-            <code>.browserslistrc</code> ?</p>
+          <pre><code class="language-js" data-path="webpack.parts.js" data-trim data-keep-tags="u">
+exports.babelize = ({ include, exclude }) => ({
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include,
+        exclude,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            <u>presets: [['env', { modules: false }]],</u>
+          },
+        },
+      },
+    ],
+  },
+})
+          </code></pre>
         </section>
 
         <section>
@@ -404,7 +660,6 @@ npm install
 
           <p>Intérêt et limites actuelles</p>
           <p>Exemple avec divers imports de lodash</p>
-          <p>Passer en syntaxe modules… mais pas partout ?</p>
           <p>Impact sur le rebuild</p>
         </section>
       </section>
@@ -418,18 +673,42 @@ npm install
         <section>
           <h2>Minifier JS</h2>
 
-          <p>UglifyJS, sa vie, son œuvre</p>
-          <p>Babili ? Un autre ?</p>
-          <p>Activer les source maps quand même…</p>
-          <p>Environnements et code mort en production</p>
+          <pre><code class="language-js" data-path="webpack.parts.js" data-trim>
+exports.stripNonProductionCode = () => ({
+  plugins: [
+    new webpack.optimize.DefinePlugin({
+      'process.env': { NODE_ENV: '"production"' },
+    }),
+  ],
+})
+
+exports.minifyJS = () => ({
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+    }),
+  ],
+})
+          </code></pre>
         </section>
 
         <section>
           <h2>Minifier CSS</h2>
 
-          <p>cssnano est déjà utilisable</p>
-          <p>Avec un peu de config : clean-css, etc.</p>
-          <p>Comment activier la minification intégrée aux loaders ?</p>
+          <p>
+            <a href="http://cssnano.co/">cssnano</a> est utilisable par défaut</p>
+          <pre><code class="language-js" data-path="webpack.parts.js" data-trim>
+exports.enableAutoMinifiers = () => ({
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
+    }),
+  ],
+})
+          </code></pre>
+          <p>Avec
+            <a href="https://survivejs.com/webpack/optimizing/minifying/#minifying-css">un peu de config</a> : clean-css, etc.</p>
         </section>
 
         <section>
@@ -459,10 +738,39 @@ npm install
         <section>
           <h2>Vendoring automatique</h2>
 
-          <p>C’est quoi, « vendorer » ?</p>
-          <p>CommonsChunkPlugin</p>
-          <p>Principes de fonctionnement</p>
-          <p>Mise en œuvre dans notre projet</p>
+          <p>
+            <a href="https://webpack.js.org/plugins/commons-chunk-plugin/">CommonsChunkPlugin</a>
+          </p>
+
+          <div class="two-columns">
+            <div>
+              <pre><code class="language-js" data-path="webpack.parts.js" data-trim>
+exports.autoVendor = () => ({
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: ({ resource }) =>
+        resource &&
+        resource.includes('node_modules')
+    }),
+  ],
+})
+              </code></pre>
+            </div>
+            <div>
+              <pre><code class="language-js" data-path="webpack.config.js" data-trim data-keep-tags="u">
+…
+entry: <u>{
+  app: PATHS.app,
+}</u>,
+output: {
+  filename: '<u>[name]</u>.js',
+  …
+},
+…
+              </code></pre>
+            </div>
+          </div>
         </section>
 
         <section>
@@ -475,11 +783,102 @@ npm install
             <code>contenthash</code>
           </p>
           <p>Limitation de la taille de hash utilisée</p>
-          <p>Mise en œuvre</p>
-          <p>Soucis avec les noms qui changent tout le temps…</p>
-          <p>html-webpack-plugin</p>
-          <p>clean-webpack-plugin</p>
-          <p>Extraction futée du manifeste pour des mises à jour ciblées</p>
+
+          <pre><code class="language-js" data-path="webpack.parts.js" data-trim data-keep-tags="u">
+exports.hashFiles = () => ({
+  output: {
+    filename: '[name]<u>.[chunkhash:8]</u>.js',
+  },
+})
+…
+new ExtractTextPlugin({
+  filename: 'app.<u>[contenthash:8]</u>.css',
+  allChunks: true,
+})
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Hashes intelligents (suite)</h2>
+
+          <p>Les noms changent tout le temps !
+            <br/>Je dois mettre à jour mon HTML en permanence ?
+          </p>
+
+          <p>Non, on peut générer du HTML qui est à jour sur les noms produits :</p>
+
+          <pre class="command-line" data-prompt="$"><code class="language-bash" data-trim>
+npm install --save-dev html-webpack-plugin
+git rm build/index.html
+          </code></pre>
+
+          <pre><code class="language-js" data-path="webpack.parts.js" data-trim>
+const HTMLPlugin = require('html-webpack-plugin')
+…
+exports.htmlStub = () => ({
+  plugins: [new HTMLPlugin()],
+})
+          </code></pre>
+
+          <p>Il y a évidemment une
+            <a href="https://github.com/jantimon/html-webpack-plugin#readme">tonne d’options</a>
+            <br/> (et même des tas de plugins par-dessus).
+          </p>
+        </section>
+
+        <section>
+          <h2>Hashes intelligents (suite)</h2>
+
+          <p>Les noms changent tout le temps !
+            <br/>Ça pourrit
+            <tt>build/</tt> au fil du temps…
+          </p>
+
+          <p>Pas de soucis, on purge le dossier au début :</p>
+
+          <pre class="command-line" data-prompt="$"><code class="language-bash" data-trim>
+npm install --save-dev clean-webpack-plugin
+          </code></pre>
+
+          <pre><code class="language-js" data-path="webpack.parts.js" data-trim>
+const CleanupPlugin = require('clean-webpack-plugin')
+…
+exports.cleanup = ({ path, exclude }) => ({
+  plugins: [new CleanupPlugin(path, { exclude })],
+})
+          </code></pre>
+
+          <p>Là aussi,
+            <a href="https://github.com/johnagan/clean-webpack-plugin#readme">plusieurs options disponibles</a>.</p>
+        </section>
+
+        <section>
+          <h2>Hashes intelligents (suite)</h2>
+
+          <p>Si je change juste du code pour
+            <tt>app.js</tt>, ça modifie quand même le hash de
+            <tt>vendor.js</tt>, c’est quoi ce binz ?
+          </p>
+
+          <p>C’est le
+            <strong>manifeste</strong> qui figure dans chaque bundle… On le sort !</p>
+
+          <pre><code class="language-js" data-path="webpack.parts.js" data-trim data-keep-tags="u">
+exports.autoVendor = () => ({
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: ({ resource }) =>
+        resource &&
+        resource.includes('node_modules')
+    }),
+<u>    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: +Infinity,
+    }),</u>
+  ],
+})
+          </code></pre>
         </section>
       </section>
       <!-- #cache -->
