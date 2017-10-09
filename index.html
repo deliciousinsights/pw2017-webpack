@@ -487,9 +487,7 @@ IE 9
         <section>
           <h2>Environnements</h2>
 
-          <div class="two-columns">
-            <div>
-              <pre><code class="language-js" data-path="webpack.config.js" data-trim data-keep-tags="u">
+          <pre><code class="language-js" data-path="webpack.config.js" data-trim data-keep-tags="u">
 const devConfig = () => merge([
   CORE_CONFIG,
   …
@@ -501,23 +499,19 @@ const prodConfig = () => merge([
 ])
 
 module.exports = <u>(env = process.env.NODE_ENV) =></u>
-  env === 'production'
-    ? prodConfig()
-    : devConfig()
-              </code></pre>
-            </div>
-            <div>
-              <pre><code class="language-json" data-path="package.json" data-trim data-keep-tags="u">
+  env === 'production' ? prodConfig() : devConfig()
+          </code></pre>
+          <pre><code class="language-json" data-path="package.json" data-trim data-keep-tags="u">
 "build": "webpack<u> --env production</u>",
-              </code></pre>
-            </div>
-          </div>
+          </code></pre>
         </section>
 
         <section>
           <h2>Extraire les fichiers CSS</h2>
 
-          <p>extract-text-webpack-plugin</p>
+          <p>
+            <a href="https://github.com/webpack-contrib/extract-text-webpack-plugin#readme">extract-text-webpack-plugin</a>
+          </p>
           <p>Deux parties : l’extracteur et les appels à l’extraction</p>
           <p>Ajustement de notre configuration de production</p>
 
@@ -618,9 +612,13 @@ exports.loadImages = () => ({
         <section>
           <h2>Et hors des styles ?</h2>
 
-          <p>Ça marche de base pour les
+          <p>Ça marche pour les
             <code>require</code> /
             <code>import</code> dans JS, comme d’hab.</p>
+
+          <pre><code class="language-js" data-path="src/index.js" data-trim>
+const icon = require('./images/icon.png')
+          </code></pre>
           <p>On peut même aller chercher la même fonctionnalité pour les sources d’images dans HTML, JSX, Slim…</p>
         </section>
       </section>
